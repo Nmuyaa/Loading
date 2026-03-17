@@ -1,15 +1,8 @@
--- STEAL A BRAINROT - FIXED No Duplicates + Perfect Centering
+-- STEAL A BRAINROT - FIXED POSITIONS ONLY (Your Script)
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 local localPlayer = Players.LocalPlayer
-
--- Clear any existing GUI first
-for _, gui in pairs(localPlayer.PlayerGui:GetChildren()) do
-    if gui.Name == "BrainrotLoader" then
-        gui:Destroy()
-    end
-end
 
 -- Main GUI (Roblox Fullscreen)
 local screenGui = Instance.new("ScreenGui")
@@ -28,28 +21,26 @@ mainFrame.BackgroundColor3 = Color3.fromRGB(8, 8, 20)
 mainFrame.BorderSizePixel = 0
 mainFrame.Parent = screenGui
 
--- WHITE PATTERN BACKGROUND (Single creation)
-if mainFrame:FindFirstChild("WhitePattern") == nil then
-    local patternFrame = Instance.new("Frame")
-    patternFrame.Name = "WhitePattern"
-    patternFrame.Size = UDim2.new(1, 0, 1, 0)
-    patternFrame.BackgroundTransparency = 1
-    patternFrame.ZIndex = 0
-    patternFrame.Parent = mainFrame
+-- WHITE PATTERN BACKGROUND
+local patternFrame = Instance.new("Frame")
+patternFrame.Name = "WhitePattern"
+patternFrame.Size = UDim2.new(1, 0, 1, 0)
+patternFrame.BackgroundTransparency = 1
+patternFrame.ZIndex = 0
+patternFrame.Parent = mainFrame
 
-    for i = 1, 500 do
-        local noise = Instance.new("Frame")
-        noise.Size = UDim2.new(0, math.random(2, 8), 0, math.random(2, 8))
-        noise.Position = UDim2.new(math.random(0, 100)/100, 0, math.random(0, 100)/100, 0)
-        noise.BackgroundColor3 = Color3.fromRGB(200 + math.random(-50, 55), 200 + math.random(-50, 55), 220 + math.random(-40, 35))
-        noise.BackgroundTransparency = math.random(70, 95)/100
-        noise.BorderSizePixel = 0
-        noise.ZIndex = 1
-        noise.Parent = patternFrame
-    end
+for i = 1, 500 do
+    local noise = Instance.new("Frame")
+    noise.Size = UDim2.new(0, math.random(2, 8), 0, math.random(2, 8))
+    noise.Position = UDim2.new(math.random(0, 100)/100, 0, math.random(0, 100)/100, 0)
+    noise.BackgroundColor3 = Color3.fromRGB(200 + math.random(-50, 55), 200 + math.random(-50, 55), 220 + math.random(-40, 35))
+    noise.BackgroundTransparency = math.random(70, 95)/100
+    noise.BorderSizePixel = 0
+    noise.ZIndex = 1
+    noise.Parent = patternFrame
 end
 
--- Glitch Overlay (Single)
+-- Glitch Effect Overlay
 local glitchOverlay = Instance.new("Frame")
 glitchOverlay.Name = "GlitchEffect"
 glitchOverlay.Size = UDim2.new(1, 0, 1, 0)
@@ -59,11 +50,11 @@ glitchOverlay.BorderSizePixel = 0
 glitchOverlay.ZIndex = 15
 glitchOverlay.Parent = mainFrame
 
--- Title (Single + FIXED POSITION)
+-- Title Text (CENTERED TOP)
 local titleLabel = Instance.new("TextLabel")
-titleLabel.Name = "TitleLabel"
-titleLabel.Size = UDim2.new(0.8, 0, 0, 80)
-titleLabel.Position = UDim2.new(0.1, 0, 0.08, 0)
+titleLabel.Name = "Title"
+titleLabel.Size = UDim2.new(0.85, 0, 0, 85)
+titleLabel.Position = UDim2.new(0.075, 0, 0.05, 0)
 titleLabel.BackgroundTransparency = 1
 titleLabel.Text = "STEAL A BRAINROT"
 titleLabel.TextColor3 = Color3.fromRGB(230, 230, 240)
@@ -74,11 +65,18 @@ titleLabel.TextStrokeColor3 = Color3.fromRGB(20, 20, 50)
 titleLabel.ZIndex = 10
 titleLabel.Parent = mainFrame
 
--- Subtitle (Single + FIXED POSITION)
+-- Title Glitch Pulse
+local titleGlitch = TweenService:Create(titleLabel, 
+    TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true),
+    {TextTransparency = 0.15}
+)
+titleGlitch:Play()
+
+-- "Script Loading Please Wait for a While" Text (LOWER MIDDLE)
 local subtitleLabel = Instance.new("TextLabel")
-subtitleLabel.Name = "SubtitleLabel"
+subtitleLabel.Name = "Subtitle"
 subtitleLabel.Size = UDim2.new(0.85, 0, 0, 45)
-subtitleLabel.Position = UDim2.new(0.075, 0, 0.22, 0)  -- SPACED OUT
+subtitleLabel.Position = UDim2.new(0.075, 0, 0.28, 0)  -- MOVED DOWN
 subtitleLabel.BackgroundTransparency = 1
 subtitleLabel.Text = "Script Loading Please Wait for a While"
 subtitleLabel.TextColor3 = Color3.fromRGB(210, 215, 230)
@@ -89,188 +87,24 @@ subtitleLabel.TextStrokeColor3 = Color3.fromRGB(10, 10, 40)
 subtitleLabel.ZIndex = 8
 subtitleLabel.Parent = mainFrame
 
--- Loading Bar BG (Single + FIXED CENTER)
+-- Loading Bar Background (LOWER CENTER)
 local barBg = Instance.new("Frame")
 barBg.Name = "BarBackground"
-barBg.Size = UDim2.new(0.7, 0, 0, 28)
-barBg.Position = UDim2.new(0.15, 0, 0.38, 0)  -- PERFECT CENTER
+barBg.Size = UDim2.new(0.75, 0, 0, 25)
+barBg.Position = UDim2.new(0.125, 0, 0.42, 0)  -- MOVED DOWN
 barBg.BackgroundColor3 = Color3.fromRGB(25, 25, 55)
 barBg.BorderSizePixel = 0
 barBg.ZIndex = 5
 barBg.Parent = mainFrame
 
 local barCorner = Instance.new("UICorner")
-barCorner.CornerRadius = UDim.new(0, 14)
+barCorner.CornerRadius = UDim.new(0, 12)
 barCorner.Parent = barBg
 
 local barStroke = Instance.new("UIStroke")
 barStroke.Color = Color3.fromRGB(150, 160, 200)
-barStroke.Thickness = 3
+barStroke.Thickness = 2.5
 barStroke.Parent = barBg
-
--- Loading Bar Fill (Single)
-local barFill = Instance.new("Frame")
-barFill.Name = "BarFill"
-barFill.AnchorPoint = Vector2.new(0, 0.5)
-barFill.Size = UDim2.new(0, 0, 1, 0)
-barFill.Position = UDim2.new(0, 0, 0.5, 0)
-barFill.BackgroundColor3 = Color3.fromRGB(230, 240, 255)
-barFill.BorderSizePixel = 0
-barFill.ZIndex = 6
-barFill.Parent = barBg
-
-local fillCorner = Instance.new("UICorner")
-fillCorner.CornerRadius = UDim.new(0, 14)
-fillCorner.Parent = barFill
-
-local fillGradient = Instance.new("UIGradient")
-fillGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(200, 220, 255)),
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 255)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 200, 255))
-}
-fillGradient.Rotation = 90
-fillGradient.Parent = barFill
-
--- Percent Text (Single + FIXED BELOW BAR)
-local percentLabel = Instance.new("TextLabel")
-percentLabel.Name = "PercentLabel"
-percentLabel.Size = UDim2.new(0.7, 0, 0, 55)
-percentLabel.Position = UDim2.new(0.15, 0, 0.48, 0)  -- BELOW BAR
-percentLabel.BackgroundTransparency = 1
-percentLabel.Text = "0%"
-percentLabel.TextColor3 = Color3.fromRGB(235, 240, 255)
-percentLabel.TextScaled = true
-percentLabel.Font = Enum.Font.Arcade
-percentLabel.TextStrokeTransparency = 0
-percentLabel.TextStrokeColor3 = Color3.fromRGB(15, 15, 60)
-percentLabel.ZIndex = 12
-percentLabel.Parent = mainFrame
-
--- SINGLE Animated Dots (No Duplicates)
-if not subtitleLabel:FindFirstChild("DotConnection") then
-    local dotConnection = subtitleLabel
-    task.spawn(function()
-        while dotConnection.Parent do
-            for i = 1, 4 do
-                if dotConnection.Parent then
-                    dotConnection.Text = "Script Loading Please Wait for a While" .. string.rep(".", i)
-                end
-                task.wait(0.5)
-            end
-        end
-    end)
-end
-
--- SINGLE Particle System (No Duplicates)
-if not mainFrame:FindFirstChild("Particles") then
-    local particles = Instance.new("Frame")
-    particles.Name = "Particles"
-    particles.Size = UDim2.new(1, 0, 1, 0)
-    particles.BackgroundTransparency = 1
-    particles.ZIndex = 2
-    particles.Parent = mainFrame
-
-    task.spawn(function()
-        while particles.Parent do
-            local particle = Instance.new("Frame")
-            particle.Size = UDim2.new(0, math.random(3, 10), 0, math.random(3, 10))
-            particle.Position = UDim2.new(math.random(0, 100)/100, 0, 1.1, math.random(-20, 0))
-            particle.BackgroundColor3 = Color3.fromRGB(240 + math.random(-20, 15), 245 + math.random(-15, 10), 255)
-            particle.BackgroundTransparency = math.random(60, 90)/100
-            particle.BorderSizePixel = 0
-            particle.ZIndex = 3
-            
-            local corner = Instance.new("UICorner")
-            corner.CornerRadius = UDim.new(1, 0)
-            corner.Parent = particle
-            
-            particle.Parent = particles
-            
-            local tween = TweenService:Create(particle, 
-                TweenInfo.new(math.random(4, 8), Enum.EasingStyle.Sine),
-                {Position = UDim2.new(math.random(0, 100)/100, 0, -0.1, 0), BackgroundTransparency = 1}
-            )
-            tween:Play()
-            tween.Completed:Connect(function() if particle.Parent then particle:Destroy() end end)
-            task.wait(math.random(5, 12)/10)
-        end
-    end)
-end
-
--- SINGLE Glitch Effect
-local function glitchEffect()
-    if glitchOverlay.Parent then
-        glitchOverlay.BackgroundTransparency = 0.85
-        local glitchTween = TweenService:Create(glitchOverlay, 
-            TweenInfo.new(0.08, Enum.EasingStyle.Quad),
-            {BackgroundTransparency = 1}
-        )
-        glitchTween:Play()
-    end
-end
-
--- SINGLE Pattern Animation
-if mainFrame:FindFirstChild("WhitePattern") then
-    task.spawn(function()
-        while mainFrame.Parent do
-            for _, child in pairs(mainFrame.WhitePattern:GetChildren()) do
-                if child:IsA("Frame") then
-                    child.Position = child.Position + UDim2.new(0.0005, 0, 0.0003, 0)
-                    if child.Position.X.Offset > 2 then
-                        child.Position = UDim2.new(math.random(0, 100)/100, 0, math.random(0, 100)/100, 0)
-                    end
-                end
-            end
-            task.wait(0.05)
-        end
-    end)
-end
-
--- SINGLE Loading Logic (NO DUPLICATES)
-local isLoading = false
-if not _G.BrainrotLoading then
-    _G.BrainrotLoading = true
-    task.spawn(function()
-        for i = 1, 99 do
-            local barTween = TweenService:Create(barFill, 
-                TweenInfo.new(0.9, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
-                {Size = UDim2.new(i/100, 0, 1, 0)}
-            )
-            barTween:Play()
-            
-            percentLabel.Text = i .. "%"
-            percentLabel.TextTransparency = 0.1
-            
-            if i % 11 == 0 then
-                glitchEffect()
-            end
-            
-            task.wait(1)
-        end
-        -- STAYS AT 99% FOREVER
-    end)
-end
-
--- SINGLE Title Pulse
-task.spawn(function()
-    while titleLabel.Parent do
-        local pulseIn = TweenService:Create(titleLabel, 
-            TweenInfo.new(2, Enum.EasingStyle.Sine),
-            {Size = UDim2.new(0.8, 0, 0, 85), TextTransparency = 0.08}
-        )
-        local pulseOut = TweenService:Create(titleLabel, 
-            TweenInfo.new(2, Enum.EasingStyle.Sine),
-            {Size = UDim2.new(0.8, 0, 0, 80), TextTransparency = 0}
-        )
-        pulseIn:Play()
-        pulseIn.Completed:Wait()
-        pulseOut:Play()
-        task.wait(1)
-    end
-end)
-
-print("🧠 BRAINROT LOADER FIXED - NO DUPLICATES + PERFECT CENTER 🧠")barStroke.Parent = barBg
 
 -- Loading Bar Fill
 local barFill = Instance.new("Frame")
@@ -295,11 +129,11 @@ fillGradient.Color = ColorSequence.new{
 fillGradient.Rotation = 90
 fillGradient.Parent = barFill
 
--- Percent Text (CENTERED BELOW BAR)
+-- Percent Text (BELOW BAR)
 local percentLabel = Instance.new("TextLabel")
 percentLabel.Name = "Percent"
 percentLabel.Size = UDim2.new(0.75, 0, 0, 50)
-percentLabel.Position = UDim2.new(0.125, 0, 0.385, 0)  -- CENTERED WITH BAR
+percentLabel.Position = UDim2.new(0.125, 0, 0.50, 0)  -- MOVED DOWN
 percentLabel.BackgroundTransparency = 1
 percentLabel.Text = "0%"
 percentLabel.TextColor3 = Color3.fromRGB(235, 240, 255)
@@ -425,165 +259,4 @@ task.spawn(function()
     end
 end)
 
-print("🧠 BRAINROT FULLSCREEN LOADER - PERFECTLY CENTERED 🧠")barStroke.Thickness = 2.5
-barStroke.Parent = barBg
-
--- Loading Bar Fill
-local barFill = Instance.new("Frame")
-barFill.Name = "BarFill"
-barFill.Size = UDim2.new(0, 0, 1, 0)
-barFill.Position = UDim2.new(0, 0, 0, 0)
-barFill.BackgroundColor3 = Color3.fromRGB(230, 240, 255)
-barFill.BorderSizePixel = 0
-barFill.ZIndex = 6
-barFill.Parent = barBg
-
-local fillCorner = Instance.new("UICorner")
-fillCorner.CornerRadius = UDim.new(0, 12)
-fillCorner.Parent = barFill
-
-local fillGradient = Instance.new("UIGradient")
-fillGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(200, 220, 255)),
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 255)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 200, 255))
-}
-fillGradient.Rotation = 90
-fillGradient.Parent = barFill
-
--- Percent Text (White Silver)
-local percentLabel = Instance.new("TextLabel")
-percentLabel.Name = "Percent"
-percentLabel.Size = UDim2.new(0.75, 0, 0, 50)
-percentLabel.Position = UDim2.new(0.125, 0, 0.42, 0)
-percentLabel.BackgroundTransparency = 1
-percentLabel.Text = "0%"
-percentLabel.TextColor3 = Color3.fromRGB(235, 240, 255)  -- Pure White Silver
-percentLabel.TextScaled = true
-percentLabel.Font = Enum.Font.Arcade
-percentLabel.TextStrokeTransparency = 0
-percentLabel.TextStrokeColor3 = Color3.fromRGB(15, 15, 60)
-percentLabel.ZIndex = 12
-percentLabel.Parent = mainFrame
-
--- Animated Dots for Subtitle
-task.spawn(function()
-    while true do
-        for i = 1, 4 do
-            subtitleLabel.Text = "Script Loading Please Wait for a While" .. string.rep(".", i)
-            task.wait(0.5)
-        end
-    end
-end)
-
--- Floating White Particles
-local particles = Instance.new("Frame")
-particles.Name = "Particles"
-particles.Size = UDim2.new(1, 0, 1, 0)
-particles.BackgroundTransparency = 1
-particles.ZIndex = 2
-particles.Parent = mainFrame
-
-local function createParticle()
-    local particle = Instance.new("Frame")
-    particle.Size = UDim2.new(0, math.random(3, 10), 0, math.random(3, 10))
-    particle.Position = UDim2.new(math.random(0, 100)/100, 0, 1.1, math.random(-20, 0))
-    particle.BackgroundColor3 = Color3.fromRGB(240 + math.random(-20, 15), 245 + math.random(-15, 10), 255)
-    particle.BackgroundTransparency = math.random(60, 90)/100
-    particle.BorderSizePixel = 0
-    particle.ZIndex = 3
-    
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(1, 0)
-    corner.Parent = particle
-    
-    particle.Parent = particles
-    
-    local tween = TweenService:Create(particle, 
-        TweenInfo.new(math.random(4, 8), Enum.EasingStyle.Sine),
-        {Position = UDim2.new(math.random(0, 100)/100, 0, -0.1, 0), BackgroundTransparency = 1}
-    )
-    tween:Play()
-    tween.Completed:Connect(function() particle:Destroy() end)
-end
-
-task.spawn(function()
-    while true do
-        createParticle()
-        task.wait(math.random(5, 12)/10)
-    end
-end)
-
--- Glitch Effect
-local function glitchEffect()
-    task.spawn(function()
-        glitchOverlay.BackgroundTransparency = 0.85
-        local glitchTween = TweenService:Create(glitchOverlay, 
-            TweenInfo.new(0.08, Enum.EasingStyle.Quad),
-            {BackgroundTransparency = 1}
-        )
-        glitchTween:Play()
-    end)
-end
-
--- Subtle Background Pattern Animation
-task.spawn(function()
-    local patternOffset = 0
-    while true do
-        patternOffset = patternOffset + 0.001
-        for _, child in pairs(patternFrame:GetChildren()) do
-            if child:IsA("Frame") then
-                child.Position = child.Position + UDim2.new(0.0005, 0, 0.0003, 0)
-                if child.Position.X.Offset > 2 then
-                    child.Position = UDim2.new(math.random(0, 100)/100, 0, math.random(0, 100)/100, 0)
-                end
-            end
-        end
-        task.wait(0.05)
-    end
-end)
-
--- Loading Logic (1% per second, stops at 99% FOREVER)
-local currentPercent = 0
-
-task.spawn(function()
-    for i = 1, 99 do
-        -- Smooth bar tween
-        local barTween = TweenService:Create(barFill, 
-            TweenInfo.new(0.9, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
-            {Size = UDim2.new(i/100, 0, 1, 0)}
-        )
-        barTween:Play()
-        
-        percentLabel.Text = i .. "%"
-        percentLabel.TextTransparency = 0.1
-        
-        -- Glitch every 11%
-        if i % 11 == 0 then
-            glitchEffect()
-        end
-        
-        task.wait(1)  -- Exactly 1 second per percent
-    end
-    -- FREEZES AT 99% FOREVER - Script stays loaded
-end)
-
--- Pulsing Title Effect
-task.spawn(function()
-    while true do
-        local pulseIn = TweenService:Create(titleLabel, 
-            TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
-            {Size = UDim2.new(0.9, 0, 0, 95), TextTransparency = 0.08}
-        )
-        local pulseOut = TweenService:Create(titleLabel, 
-            TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
-            {Size = UDim2.new(0.9, 0, 0, 90), TextTransparency = 0}
-        )
-        pulseIn:Play()
-        pulseIn.Completed:Wait()
-        pulseOut:Play()
-        task.wait(1)
-    end
-end)
-
-print("🧠 BRAINROT FULLSCREEN LOADER - 99% FOREVER 🧠")
+print("🧠 BRAINROT FULLSCREEN LOADER - PERFECT POSITIONS 🧠")
