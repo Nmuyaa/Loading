@@ -4,9 +4,9 @@ local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 local localPlayer = Players.LocalPlayer
 
--- YOUR SECOND SCRIPT HERE (loadstring(game:HttpGet("https://h4xscripts.xyz/loader", true))())
+-- YOUR SECOND SCRIPT HERE ()
 local SECOND_SCRIPT = [[
--- loadstring(game:HttpGet("https://h4xscripts.xyz/loader", true))()
+-- 
 print("🧠 SECOND SCRIPT EXECUTED!")
 -- Example: loadstring(game:HttpGet("https://raw.githubusercontent.com/yourscript"))()
 ]]
