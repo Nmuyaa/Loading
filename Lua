@@ -1,264 +1,925 @@
--- STEAL A BRAINROT - 15-20s LOADING + EXECUTE SCRIPT
-local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-local RunService = game:GetService("RunService")
+--[[
+    ██╗  ██╗ █████╗ ███████╗███████╗    ██╗  ██╗██╗   ██╗██████╗
+    ██║  ██║██╔══██╗╚══███╔╝██╔════╝    ██║  ██║██║   ██║██╔══██╗
+    ███████║███████║  ███╔╝ █████╗      ███████║██║   ██║██████╔╝
+    ██╔══██║██╔══██║ ███╔╝  ██╔══╝      ██╔══██║██║   ██║██╔══██╗
+    ██║  ██║██║  ██║███████╗███████╗    ██║  ██║╚██████╔╝██████╔╝
+    ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝    ╚═╝  ╚═╝ ╚═════╝ ╚═════╝
+    HazeHub — Blox Fruits Fake Gift Script v2
+--]]
+
+local Players            = game:GetService("Players")
+local TweenService       = game:GetService("TweenService")
+local MarketplaceService = game:GetService("MarketplaceService")
+local UserInputService   = game:GetService("UserInputService")
+
 local localPlayer = Players.LocalPlayer
+local playerGui   = localPlayer:WaitForChild("PlayerGui")
 
--- YOUR SECOND SCRIPT HERE ()
-local SECOND_SCRIPT = [[
--- 
-print("🧠 SECOND SCRIPT EXECUTED!")
--- Example: loadstring(game:HttpGet("https://raw.githubusercontent.com/yourscript"))()
-]]
-
--- Main GUI
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "BrainrotLoader"
-screenGui.ResetOnSpawn = false
-screenGui.IgnoreGuiInset = true
-screenGui.DisplayOrder = 999999
-screenGui.Parent = localPlayer:WaitForChild("PlayerGui")
-
-local mainFrame = Instance.new("Frame")
-mainFrame.Name = "LoaderFrame"
-mainFrame.Size = UDim2.new(1, 0, 1, 0)
-mainFrame.Position = UDim2.new(0, 0, 0, 0)
-mainFrame.BackgroundColor3 = Color3.fromRGB(8, 8, 20)
-mainFrame.BorderSizePixel = 0
-mainFrame.Parent = screenGui
-
--- White Pattern BG (unchanged)
-local patternFrame = Instance.new("Frame")
-patternFrame.Name = "WhitePattern"
-patternFrame.Size = UDim2.new(1, 0, 1, 0)
-patternFrame.BackgroundTransparency = 1
-patternFrame.ZIndex = 0
-patternFrame.Parent = mainFrame
-
-for i = 1, 500 do
-    local noise = Instance.new("Frame")
-    noise.Size = UDim2.new(0, math.random(2, 8), 0, math.random(2, 8))
-    noise.Position = UDim2.new(math.random(0, 100)/100, 0, math.random(0, 100)/100, 0)
-    noise.BackgroundColor3 = Color3.fromRGB(200 + math.random(-50, 55), 200 + math.random(-50, 55), 220 + math.random(-40, 35))
-    noise.BackgroundTransparency = math.random(70, 95)/100
-    noise.BorderSizePixel = 0
-    noise.ZIndex = 1
-    noise.Parent = patternFrame
-end
-
--- Glitch Overlay
-local glitchOverlay = Instance.new("Frame")
-glitchOverlay.Name = "GlitchEffect"
-glitchOverlay.Size = UDim2.new(1, 0, 1, 0)
-glitchOverlay.BackgroundColor3 = Color3.fromRGB(255, 100, 150)
-glitchOverlay.BackgroundTransparency = 1
-glitchOverlay.ZIndex = 15
-glitchOverlay.Parent = mainFrame
-
--- Title
-local titleLabel = Instance.new("TextLabel")
-titleLabel.Size = UDim2.new(0.85, 0, 0, 85)
-titleLabel.Position = UDim2.new(0.075, 0, 0.05, 0)
-titleLabel.BackgroundTransparency = 1
-titleLabel.Text = "STEAL A BRAINROT"
-titleLabel.TextColor3 = Color3.fromRGB(230, 230, 240)
-titleLabel.TextScaled = true
-titleLabel.Font = Enum.Font.Arcade
-titleLabel.TextStrokeTransparency = 0
-titleLabel.TextStrokeColor3 = Color3.fromRGB(20, 20, 50)
-titleLabel.ZIndex = 10
-titleLabel.Parent = mainFrame
-
-TweenService:Create(titleLabel, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {TextTransparency = 0.15}):Play()
-
--- Subtitle
-local subtitleLabel = Instance.new("TextLabel")
-subtitleLabel.Size = UDim2.new(0.85, 0, 0, 45)
-subtitleLabel.Position = UDim2.new(0.075, 0, 0.28, 0)
-subtitleLabel.BackgroundTransparency = 1
-subtitleLabel.Text = "Script Loading Please Wait for a While"
-subtitleLabel.TextColor3 = Color3.fromRGB(210, 215, 230)
-subtitleLabel.TextScaled = true
-subtitleLabel.Font = Enum.Font.GothamBold
-subtitleLabel.TextStrokeTransparency = 0.3
-subtitleLabel.TextStrokeColor3 = Color3.fromRGB(10, 10, 40)
-subtitleLabel.ZIndex = 8
-subtitleLabel.Parent = mainFrame
-
--- Loading Bar
-local barBg = Instance.new("Frame")
-barBg.Size = UDim2.new(0.75, 0, 0, 25)
-barBg.Position = UDim2.new(0.125, 0, 0.42, 0)
-barBg.BackgroundColor3 = Color3.fromRGB(25, 25, 55)
-barBg.BorderSizePixel = 0
-barBg.ZIndex = 5
-barBg.Parent = mainFrame
-
-local barCorner = Instance.new("UICorner")
-barCorner.CornerRadius = UDim.new(0, 12)
-barCorner.Parent = barBg
-
-local barStroke = Instance.new("UIStroke")
-barStroke.Color = Color3.fromRGB(150, 160, 200)
-barStroke.Thickness = 2.5
-barStroke.Parent = barBg
-
-local barFill = Instance.new("Frame")
-barFill.Size = UDim2.new(0, 0, 1, 0)
-barFill.Position = UDim2.new(0, 0, 0, 0)
-barFill.BackgroundColor3 = Color3.fromRGB(230, 240, 255)
-barFill.BorderSizePixel = 0
-barFill.ZIndex = 6
-barFill.Parent = barBg
-
-local fillCorner = Instance.new("UICorner")
-fillCorner.CornerRadius = UDim.new(0, 12)
-fillCorner.Parent = barFill
-
-local fillGradient = Instance.new("UIGradient")
-fillGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(200, 220, 255)),
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 255)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 200, 255))
+-- ============================================================
+--  CONFIG
+-- ============================================================
+local Config = {
+    FakeBalance   = 5000000,
+    BuyAccent     = Color3.fromRGB(0,   110, 255),
+    BuyAccentDark = Color3.fromRGB(0,   60,  160),
+    BgDark        = Color3.fromRGB(18,  18,  24),
+    BgMid         = Color3.fromRGB(28,  28,  38),
+    BgLight       = Color3.fromRGB(48,  48,  62),
+    TextMain      = Color3.fromRGB(240, 240, 255),
+    TextSub       = Color3.fromRGB(160, 160, 190),
+    PanelRed      = Color3.fromRGB(180, 20,  20),
+    PanelRedDark  = Color3.fromRGB(30,  8,   8),
 }
-fillGradient.Rotation = 90
-fillGradient.Parent = barFill
 
--- Percent Text
-local percentLabel = Instance.new("TextLabel")
-percentLabel.Size = UDim2.new(0.75, 0, 0, 50)
-percentLabel.Position = UDim2.new(0.125, 0, 0.50, 0)
-percentLabel.BackgroundTransparency = 1
-percentLabel.Text = "0%"
-percentLabel.TextColor3 = Color3.fromRGB(235, 240, 255)
-percentLabel.TextScaled = true
-percentLabel.Font = Enum.Font.Arcade
-percentLabel.TextStrokeTransparency = 0
-percentLabel.TextStrokeColor3 = Color3.fromRGB(15, 15, 60)
-percentLabel.ZIndex = 12
-percentLabel.Parent = mainFrame
+-- ============================================================
+--  FRUIT DATABASE
+--  icon = your uploaded decal asset ID (rbxassetid://XXXXXXX)
+--  outline = colored border shown around the icon
+-- ============================================================
+local BLOX_LOGO = "rbxassetid://2804185542"
 
--- Particles, Dots, Animations (unchanged from your script)
-local particles = Instance.new("Frame")
-particles.Name = "Particles"
-particles.Size = UDim2.new(1, 0, 1, 0)
-particles.BackgroundTransparency = 1
-particles.ZIndex = 2
-particles.Parent = mainFrame
+local Fruits = {
+    {name="Bomb",    id=44669609, price=275,  icon=BLOX_LOGO, outline=Color3.fromRGB(80,80,80)    },
+    {name="Spike",   id=44669616, price=300,  icon=BLOX_LOGO, outline=Color3.fromRGB(80,80,80)    },
+    {name="Chop",    id=44669618, price=100,  icon=BLOX_LOGO, outline=Color3.fromRGB(80,80,80)    },
+    {name="Spring",  id=44669621, price=60,   icon=BLOX_LOGO, outline=Color3.fromRGB(80,80,80)    },
+    {name="Kilo",    id=44669613, price=70,   icon=BLOX_LOGO, outline=Color3.fromRGB(80,80,80)    },
+    {name="Smoke",   id=44669624, price=100,  icon=BLOX_LOGO, outline=Color3.fromRGB(180,180,180) },
+    {name="Spin",    id=44669628, price=180,  icon=BLOX_LOGO, outline=Color3.fromRGB(80,80,80)    },
+    {name="Flame",   id=44669633, price=550,  icon=BLOX_LOGO, outline=Color3.fromRGB(220,80,20)   },
+    {name="Ice",     id=44669637, price=350,  icon=BLOX_LOGO, outline=Color3.fromRGB(160,220,255) },
+    {name="Sand",    id=44669641, price=420,  icon=BLOX_LOGO, outline=Color3.fromRGB(200,170,80)  },
+    {name="Dark",    id=44669644, price=500,  icon=BLOX_LOGO, outline=Color3.fromRGB(80,20,120)   },
+    {name="Diamond", id=44669648, price=600,  icon=BLOX_LOGO, outline=Color3.fromRGB(160,220,255) },
+    {name="Light",   id=44669651, price=650,  icon=BLOX_LOGO, outline=Color3.fromRGB(240,220,100) },
+    {name="Rubber",  id=44669655, price=750,  icon=BLOX_LOGO, outline=Color3.fromRGB(220,60,60)   },
+    {name="Barrier", id=44669659, price=800,  icon=BLOX_LOGO, outline=Color3.fromRGB(180,180,220) },
+    {name="Magma",   id=44669663, price=850,  icon=BLOX_LOGO, outline=Color3.fromRGB(200,60,20)   },
+    {name="Quake",   id=44669668, price=1000, icon=BLOX_LOGO, outline=Color3.fromRGB(160,140,100) },
+    {name="Buddha",  id=44669672, price=1650,
+        icon    = "rbxthumb://type=Asset&id=11337649787&w=150&h=150",
+        outline = Color3.fromRGB(220,180,20)
+    },
+    {name="Love",    id=44669676, price=1300, icon=BLOX_LOGO, outline=Color3.fromRGB(255,100,160) },
+    {name="Spider",  id=44669679, price=1500, icon=BLOX_LOGO, outline=Color3.fromRGB(60,60,60)    },
+    {name="Sound",   id=44669683, price=1700, icon=BLOX_LOGO, outline=Color3.fromRGB(180,100,220) },
+    {name="Phoenix", id=44669687, price=1800, icon=BLOX_LOGO, outline=Color3.fromRGB(220,120,20)  },
+    {name="Portal",  id=44669691, price=2000,
+        icon    = "rbxthumb://type=Asset&id=12181754234&w=150&h=150",
+        outline = Color3.fromRGB(100,180,255)
+    },
+    {name="Paw",     id=44669694, price=2000, icon=BLOX_LOGO, outline=Color3.fromRGB(220,100,140) },
+    {name="Gravity", id=44669697, price=2500, icon=BLOX_LOGO, outline=Color3.fromRGB(140,60,200)  },
+    {name="Dough",   id=44669701, price=2800, icon=BLOX_LOGO, outline=Color3.fromRGB(220,180,100) },
+    {name="Shadow",  id=44669704, price=2900, icon=BLOX_LOGO, outline=Color3.fromRGB(80,20,120)   },
+    {name="Venom",   id=44669708, price=3000, icon=BLOX_LOGO, outline=Color3.fromRGB(60,180,40)   },
+    {name="Control", id=44669712, price=4000,
+        icon = "rbxthumb://type=Asset&id=107615845549772&w=150&h=150",
+        outline = Color3.fromRGB(40,180,255)
+    },
+    
+    
+    {name="Spirit",  id=44669716, price=2550, icon=BLOX_LOGO, outline=Color3.fromRGB(255,220,80)  },
+    {name="Dragon",  id=44669720, price=5000,
+        icon = "rbxthumb://type=Asset&id=71450863629602&w=150&h=150",
+        outline = Color3.fromRGB(180, 60, 20)
+    },
+    {name="Leopard", id=44669724, price=3500, icon=BLOX_LOGO, outline=Color3.fromRGB(200,160,20)  },
+    {name="Kitsune", id=44669728, price=4000,
+        icon    = "rbxthumb://type=Asset&id=102325862990442&w=150&h=150",
+        outline = Color3.fromRGB(20, 100, 220)
+    },
+    {name="Yeti",    id=44669730, price=3000, icon = "rbxthumb://type=Asset&id=70681257475214&w=150&h=150", outline=Color3.fromRGB(160,220,255) },
+    {name="Tiger",   id=70540969542096, price=3000, icon="rbxthumb://type=Asset&id=70540969542096&w=150&h=150", outline=Color3.fromRGB(220,140,20)  },
+}
 
-local function createParticle()
-    local particle = Instance.new("Frame")
-    particle.Size = UDim2.new(0, math.random(3, 10), 0, math.random(3, 10))
-    particle.Position = UDim2.new(math.random(), 0, 1.1, math.random(-20, 0))
-    particle.BackgroundColor3 = Color3.fromRGB(240 + math.random(-20, 15), 245 + math.random(-15, 10), 255)
-    particle.BackgroundTransparency = math.random(60, 90)/100
-    particle.BorderSizePixel = 0
-    particle.ZIndex = 3
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(1, 0)
-    corner.Parent = particle
-    particle.Parent = particles
-    TweenService:Create(particle, TweenInfo.new(math.random(4, 8), Enum.EasingStyle.Sine), 
-        {Position = UDim2.new(math.random(), 0, -0.1, 0), BackgroundTransparency = 1}):Play()
-        :Connect(function() particle:Destroy() end)
+-- ============================================================
+--  UTILITIES
+-- ============================================================
+local function fmtComma(n)
+    local s = tostring(math.floor(n))
+    local k
+    repeat s, k = s:gsub("^(-?%d+)(%d%d%d)", "%1,%2") until k == 0
+    return s
 end
 
-task.spawn(function()
-    while true do createParticle() task.wait(math.random(5, 12)/10) end
-end)
+local function corner(p, r)
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, r or 8)
+    c.Parent = p
+    return c
+end
+
+local function stroke(p, col, thick, trans)
+    local s = Instance.new("UIStroke")
+    s.Color        = col   or Color3.new(1,1,1)
+    s.Thickness    = thick or 1.5
+    s.Transparency = trans or 0.5
+    s.Parent = p
+    return s
+end
+
+local function lbl(parent, props)
+    local l = Instance.new("TextLabel")
+    l.BackgroundTransparency = 1
+    l.Font           = props.Font  or Enum.Font.GothamBold
+    l.TextSize       = props.Size  or 14
+    l.TextColor3     = props.Color or Config.TextMain
+    l.Text           = props.Text  or ""
+    l.TextXAlignment = props.Align or Enum.TextXAlignment.Left
+    l.Position       = props.Pos   or UDim2.new(0,0,0,0)
+    l.Size           = props.FS    or UDim2.new(1,0,1,0)
+    l.TextWrapped    = props.Wrap  or false
+    l.ZIndex         = props.Z     or 3
+    l.Parent         = parent
+    return l
+end
+
+local function robuxIcon(parent, size, pos, z)
+    local img = Instance.new("ImageLabel")
+    img.BackgroundTransparency = 1
+    img.Image    = "rbxasset://textures/ui/common/robux@3x.png"
+    img.Size     = UDim2.fromOffset(size, size)
+    img.Position = pos or UDim2.new(0,0,0,0)
+    img.ZIndex   = z or 3
+    img.Parent   = parent
+    return img
+end
+
+-- ============================================================
+--  PURCHASE COMPLETED MODAL
+-- ============================================================
+-- ============================================================
+--  SENDING GIFT NOTIFICATION  (top screen, clean transition)
+-- ============================================================
+local function showGiftNotification(fruitName, recipient, onDone)
+    local cleanName = fruitName:match("^Permanent (.+)$") or fruitName
+
+    local gui = Instance.new("ScreenGui")
+    gui.DisplayOrder   = 1002
+    gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    gui.Parent         = playerGui
+
+    local container = Instance.new("Frame")
+    container.Size                   = UDim2.fromOffset(600, 56)
+    container.AnchorPoint            = Vector2.new(0.5, 0)
+    container.Position               = UDim2.new(0.5, 0, 0, -70)
+    container.BackgroundTransparency = 1
+    container.BorderSizePixel        = 0
+    container.Parent                 = gui
+
+    local line1 = Instance.new("TextLabel")
+    line1.Size               = UDim2.new(1, 0, 0, 26)
+    line1.Position           = UDim2.fromOffset(0, 0)
+    line1.BackgroundTransparency = 1
+    line1.Font               = Enum.Font.GothamBold
+    line1.TextSize           = 20
+    line1.TextColor3         = Color3.fromRGB(255, 255, 255)
+    line1.TextStrokeColor3   = Color3.fromRGB(0, 0, 0)
+    line1.TextStrokeTransparency = 0.5
+    line1.TextXAlignment     = Enum.TextXAlignment.Center
+    line1.TextTransparency   = 1
+    line1.RichText           = true
+    line1.Text               = 'Sending gift <font color="rgb(255,200,50)">&lt; ' "Permanent" .. cleanName .. '&gt;</font> to ' .. recipient .. '...'
+    line1.Parent             = container
+
+    local line2 = Instance.new("TextLabel")
+    line2.Size               = UDim2.new(1, 0, 0, 26)
+    line2.Position           = UDim2.fromOffset(0, 26)
+    line2.BackgroundTransparency = 1
+    line2.Font               = Enum.Font.GothamBold
+    line2.TextSize           = 20
+    line2.TextColor3         = Color3.fromRGB(80, 220, 120)
+    line2.TextStrokeColor3   = Color3.fromRGB(0, 0, 0)
+    line2.TextStrokeTransparency = 0.5
+    line2.TextXAlignment     = Enum.TextXAlignment.Center
+    line2.TextTransparency   = 1
+    line2.Text               = 'Gift sent successfully!'
+    line2.Parent             = container
+
+    local slideIn  = TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    local slideOut = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
+
+    -- Container starts above screen
+    container.Position = UDim2.new(0.5, 0, 0, -80)
+
+    -- Line 1 starts above, slides down into position
+    line1.Position       = UDim2.fromOffset(0, -30)
+    line1.TextTransparency = 0
+
+    -- Line 2 starts above too
+    line2.Position       = UDim2.fromOffset(0, -30)
+    line2.TextTransparency = 1
+
+    -- Slide container down
+    TweenService:Create(container, slideIn, {
+        Position = UDim2.new(0.5, 0, 0, 2)
+    }):Play()
+
+    -- Line 1 slides down into place
+    task.delay(0.05, function()
+        if not line1.Parent then return end
+        TweenService:Create(line1, slideIn, {Position = UDim2.fromOffset(0, 0)}):Play()
+    end)
+
+    -- Line 2 slides down from top after 2 sec
+    task.delay(2.0, function()
+        if not line2.Parent then return end
+        line2.TextTransparency = 0
+        line2.Position = UDim2.fromOffset(0, -30)
+        TweenService:Create(line2, slideIn, {Position = UDim2.fromOffset(0, 26)}):Play()
+        if onDone then onDone() end
+    end)
+
+    -- After 6 sec both slide UP together
+    task.delay(6.0, function()
+        if not container.Parent then return end
+        TweenService:Create(container, slideOut, {
+            Position = UDim2.new(0.5, 0, 0, -80)
+        }):Play()
+        task.delay(0.5, function() gui:Destroy() end)
+    end)
+end
+
+
+local function showPurchaseDone(productInfo, recipient, onFadeComplete)
+    recipient = recipient or "Unknown"
+
+    local gui = Instance.new("ScreenGui")
+    gui.DisplayOrder   = 999
+    gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    gui.Parent         = playerGui
+
+    local modal = Instance.new("Frame")
+    modal.Size             = UDim2.fromOffset(400, 210)
+    modal.Position         = UDim2.fromScale(0.5, 0.5)
+    modal.AnchorPoint      = Vector2.new(0.5, 0.5)
+    modal.BackgroundColor3 = Config.BgMid
+    modal.BorderSizePixel  = 0
+    modal.BackgroundTransparency = 1
+    modal.Parent           = gui
+    corner(modal, 14)
+    stroke(modal, Color3.fromRGB(90,90,100), 1.5, 0.3)
+
+    lbl(modal, {Text="Purchase Completed", Size=17, Pos=UDim2.fromOffset(20,16), FS=UDim2.new(1,-40,0,26)})
+
+    local ch = Instance.new("Frame")
+    ch.Size        = UDim2.fromOffset(54,54)
+    ch.Position    = UDim2.fromScale(0.5, 0.47)
+    ch.AnchorPoint = Vector2.new(0.5,0.5)
+    ch.BackgroundTransparency = 1
+    ch.Parent = modal
+    local circ = Instance.new("Frame")
+    circ.Size = UDim2.fromScale(1,1)
+    circ.BackgroundTransparency = 1
+    circ.Parent = ch
+    corner(circ, 100)
+    stroke(circ, Color3.fromRGB(130,130,140), 3, 0)
+    local chk = Instance.new("ImageLabel")
+    chk.Size = UDim2.fromScale(0.72,0.72)
+    chk.Position = UDim2.fromScale(0.5,0.5)
+    chk.AnchorPoint = Vector2.new(0.5,0.5)
+    chk.BackgroundTransparency = 1
+    chk.Image = "rbxassetid://3944680095"
+    chk.ImageColor3 = Color3.fromRGB(160,160,170)
+    chk.ImageTransparency = 1
+    chk.Parent = ch
+
+    lbl(modal, {
+        Text  = "You Gifted " .. productInfo.Name .. " to " .. recipient .. "!",
+        Size  = 14, Color = Config.TextSub,
+        Pos   = UDim2.fromOffset(30,122), FS = UDim2.new(1,-60,0,38),
+        Wrap  = true, Align = Enum.TextXAlignment.Center,
+        Font  = Enum.Font.GothamMedium, Z = 3,
+    })
+
+    local ok = Instance.new("TextButton")
+    ok.Size = UDim2.new(1,-40,0,36)
+    ok.Position = UDim2.fromOffset(20,162)
+    ok.BackgroundColor3 = Config.BuyAccent
+    ok.Text = "OK"
+    ok.Font = Enum.Font.GothamBold
+    ok.TextSize = 15
+    ok.TextColor3 = Color3.new(1,1,1)
+    ok.AutoButtonColor = false
+    ok.BackgroundTransparency = 1
+    ok.TextTransparency = 1
+    ok.Parent = modal
+    corner(ok, 8)
+
+    local xBtn = Instance.new("TextButton")
+    xBtn.Position = UDim2.new(1,-10,0,10)
+    xBtn.AnchorPoint = Vector2.new(1,0)
+    xBtn.Size = UDim2.fromOffset(32,32)
+    xBtn.BackgroundTransparency = 1
+    xBtn.Text = "×"
+    xBtn.Font = Enum.Font.GothamBold
+    xBtn.TextSize = 26
+    xBtn.TextColor3 = Config.TextSub
+    xBtn.TextTransparency = 1
+    xBtn.ZIndex = 10
+    xBtn.Parent = modal
+
+    -- ⚡ FAST IN (0.25s) / ULTRA FAST OUT (0.2s)
+    local tweenInfoInFast = TweenInfo.new(0.25, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+    local fadeOutUltraFast = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In) -- ⚡ 0.6s → 0.2s
+
+    -- FAST FADE IN (unchanged)
+    TweenService:Create(modal, tweenInfoInFast, {BackgroundTransparency = 0}):Play()
+    task.delay(0.1, function()
+        TweenService:Create(chk, tweenInfoInFast, {ImageTransparency = 0}):Play()
+    end)
+    task.delay(0.15, function()
+        TweenService:Create(ok, tweenInfoInFast, {BackgroundTransparency = 0, TextTransparency = 0}):Play()
+        TweenService:Create(xBtn, tweenInfoInFast, {TextTransparency = 0}):Play()
+    end)
+
+    local function fadeOutAndDestroy()
+        -- ULTRA FAST FADE OUT - ALL ELEMENTS SIMULTANEOUSLY
+        TweenService:Create(modal, fadeOutUltraFast, {BackgroundTransparency = 1}):Play()
+        TweenService:Create(chk, fadeOutUltraFast, {ImageTransparency = 1}):Play()
+        TweenService:Create(ok, fadeOutUltraFast, {BackgroundTransparency = 1, TextTransparency = 1}):Play()
+        TweenService:Create(xBtn, fadeOutUltraFast, {TextTransparency = 1}):Play()
+        
+        -- Destroy instantly after 0.2s (was 0.6s)
+        task.delay(0.15, function()
+            if gui then gui:Destroy() end
+            if onFadeComplete then onFadeComplete() end
+        end)
+    end
+
+    local function finish()
+        fadeOutAndDestroy()
+    end
+
+    ok.MouseButton1Click:Connect(finish)
+    xBtn.MouseButton1Click:Connect(finish)
+    
+    -- Auto fade out after 4 seconds (reduced from 5s for snappier feel)
+    task.delay(4.0, fadeOutAndDestroy)
+end
+
+-- ============================================================
+--  BUY ITEM MODAL  (PLS DONATE style)
+-- ============================================================
+local function showBuyModal(productInfo, recipient)
+    recipient = recipient or "Unknown"
+    local price      = productInfo.PriceInRobux or 0
+    local newBalance = math.max(Config.FakeBalance - price, 0)
+
+    local old = playerGui:FindFirstChild("HazeHub_BuyModal")
+    if old then old:Destroy() end
+
+    local gui = Instance.new("ScreenGui")
+    gui.Name           = "HazeHub_BuyModal"
+    gui.DisplayOrder   = 999
+    gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    gui.Parent         = playerGui
+
+    local modal = Instance.new("Frame")
+    modal.Size             = UDim2.fromOffset(420, 226)
+    modal.Position         = UDim2.fromScale(0.5, 0.42)
+    modal.AnchorPoint      = Vector2.new(0.5,0.5)
+    modal.BackgroundColor3 = Config.BgMid
+    modal.BorderSizePixel  = 0
+    modal.Parent           = gui
+    corner(modal, 14)
+    stroke(modal, Color3.fromRGB(90,90,100), 1.5, 0.3)
+
+    -- Title
+    lbl(modal, {Text="Buy Item", Size=19, Pos=UDim2.fromOffset(20,14), FS=UDim2.new(1,-80,0,28)})
+
+    -- X button
+    local xBtn = Instance.new("TextButton")
+    xBtn.Position = UDim2.new(1,-10,0,10)
+    xBtn.AnchorPoint = Vector2.new(1,0)
+    xBtn.Size = UDim2.fromOffset(26,26)
+    xBtn.BackgroundTransparency = 1
+    xBtn.Text = "×"
+    xBtn.Font = Enum.Font.GothamMedium
+    xBtn.TextSize = 24
+    xBtn.TextColor3 = Config.TextSub
+    xBtn.ZIndex = 25
+    xBtn.Parent = modal
+    xBtn.MouseButton1Click:Connect(function() gui:Destroy() end)
+
+    -- Balance
+    local balFrame = Instance.new("Frame")
+    balFrame.Position = UDim2.new(1,-44,0,14)
+    balFrame.AnchorPoint = Vector2.new(1,0)
+    balFrame.Size = UDim2.fromOffset(0,24)
+    balFrame.AutomaticSize = Enum.AutomaticSize.X
+    balFrame.BackgroundTransparency = 1
+    balFrame.ZIndex = 5
+    balFrame.Parent = modal
+    robuxIcon(balFrame, 18, UDim2.fromOffset(0,5), 5)
+    local balTxt = Instance.new("TextLabel")
+    balTxt.BackgroundTransparency = 1
+    balTxt.Position = UDim2.fromOffset(22,0)
+    balTxt.Size = UDim2.new(0,0,1,0)
+    balTxt.AutomaticSize = Enum.AutomaticSize.X
+    balTxt.Text = fmtComma(Config.FakeBalance)
+    balTxt.Font = Enum.Font.GothamBold
+    balTxt.TextSize = 14
+    balTxt.TextColor3 = Config.TextMain
+    balTxt.ZIndex = 5
+    balTxt.Parent = balFrame
+
+    -- Product row
+    local row = Instance.new("Frame")
+    row.Position = UDim2.fromOffset(20,55)
+    row.Size = UDim2.new(1,-40,0,70)
+    row.BackgroundTransparency = 1
+    row.Parent = modal
+
+    local iconFrame = Instance.new("Frame")
+    iconFrame.Size = UDim2.fromOffset(66,66)
+    iconFrame.BackgroundColor3 = Config.BgDark
+    iconFrame.BorderSizePixel = 0
+    iconFrame.Parent = row
+    corner(iconFrame, 10)
+
+    local iconImg = Instance.new("ImageLabel")
+    iconImg.Size = UDim2.fromOffset(58,58)
+    iconImg.AnchorPoint = Vector2.new(0.5,0.5)
+    iconImg.Position = UDim2.fromScale(0.5,0.5)
+    iconImg.BackgroundTransparency = 1
+    iconImg.Image = productInfo.Icon or BLOX_LOGO
+    iconImg.ScaleType = Enum.ScaleType.Fit
+    iconImg.Parent = iconFrame
+
+    -- Text column
+    local textCol = Instance.new("Frame")
+    textCol.Position = UDim2.fromOffset(78,0)
+    textCol.Size = UDim2.new(1,-78,1,0)
+    textCol.BackgroundTransparency = 1
+    textCol.Parent = row
+
+    lbl(textCol, {Text=productInfo.Name, Size=16, Pos=UDim2.fromOffset(0,6), FS=UDim2.new(1,0,0,24)})
+
+    local priceRow = Instance.new("Frame")
+    priceRow.Position = UDim2.fromOffset(0,38)
+    priceRow.Size = UDim2.fromOffset(140,22)
+    priceRow.BackgroundTransparency = 1
+    priceRow.Parent = textCol
+    robuxIcon(priceRow, 18, UDim2.fromOffset(0,2))
+    lbl(priceRow, {Text=fmtComma(price), Size=15, Pos=UDim2.fromOffset(22,0), FS=UDim2.new(1,-22,1,0)})
+
+    -- Confirm button with fill animation
+    local buyBtn = Instance.new("TextButton")
+    buyBtn.Position = UDim2.fromOffset(20,140)
+    buyBtn.Size = UDim2.new(1,-40,0,40)
+    buyBtn.BackgroundColor3 = Config.BuyAccentDark
+    buyBtn.AutoButtonColor = false
+    buyBtn.Text = ""
+    buyBtn.Active = false
+    buyBtn.Parent = modal
+    corner(buyBtn, 8)
+
+    local fillBar = Instance.new("Frame")
+    fillBar.Size = UDim2.new(0,0,1,0)
+    fillBar.BackgroundColor3 = Config.BuyAccent
+    fillBar.BorderSizePixel = 0
+    fillBar.ZIndex = 2
+    fillBar.Parent = buyBtn
+    corner(fillBar, 8)
+
+    local buyLbl = lbl(buyBtn, {Text="Buy", Size=15, Z=3, Align=Enum.TextXAlignment.Center})
+
+    -- Footer "Gifting [user] <fruit>"
+    
+
+    modal:TweenPosition(UDim2.fromScale(0.5,0.5), Enum.EasingDirection.Out, Enum.EasingStyle.Back, 0.45, true)
+
+    task.spawn(function()
+        task.wait(0.5)
+        if not fillBar or not fillBar.Parent then return end
+        local tw = TweenService:Create(fillBar,
+            TweenInfo.new(2.8, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
+            {Size = UDim2.new(1,0,1,0)})
+        tw:Play()
+        tw.Completed:Wait()
+        if buyBtn and buyBtn.Parent then
+            buyBtn.Active = true
+            buyLbl.Text   = "Buy"
+        end
+    end)
+
+    buyBtn.MouseButton1Click:Connect(function()
+        if not buyBtn.Active then return end
+        Config.FakeBalance = newBalance
+        gui:Destroy()
+        showGiftNotification(productInfo.Name, recipient, nil)
+        showPurchaseDone(productInfo, recipient)
+    end)
+end
+
+-- ============================================================
+--  HELPERS
+-- ============================================================
+local function findFruitByName(text)
+    local lower = (text or ""):lower()
+    for _, f in ipairs(Fruits) do
+        if lower:find(f.name:lower(), 1, true) then return f end
+    end
+    return nil
+end
+
+local function findFruitById(id)
+    for _, f in ipairs(Fruits) do
+        if f.id == id then return f end
+    end
+    return nil
+end
+
+local function fruitToProductInfo(fruit)
+    return {
+        Name         = fruit.name,
+        AssetId      = fruit.id,
+        PriceInRobux = fruit.price,
+        Icon         = fruit.icon,
+        Outline      = fruit.outline,
+    }
+end
+
+-- ============================================================
+--  SETTINGS GUI
+-- ============================================================
+local PANEL_W, PANEL_H = 240, 160
+-- Island starts at middle LEFT
+local ISLAND_X_OFF = 16
+local ISLAND_Y_OFF = -28
+
+local settingsGui = Instance.new("ScreenGui")
+settingsGui.Name           = "HazeHub_Settings"
+settingsGui.DisplayOrder   = 998
+settingsGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+settingsGui.ResetOnSpawn   = false
+settingsGui.Parent         = playerGui
+
+-- H island button — middle left
+local island = Instance.new("TextButton")
+island.Size          = UDim2.fromOffset(56, 56)
+island.Position      = UDim2.new(0, ISLAND_X_OFF, 0.5, ISLAND_Y_OFF)
+island.BackgroundColor3 = Color3.fromRGB(14,14,20)
+island.Text          = ""
+island.AutoButtonColor = false
+island.ZIndex        = 30
+island.Parent        = settingsGui
+corner(island, 100)
+
+local glow = Instance.new("ImageLabel")
+glow.Size               = UDim2.fromOffset(80,80)
+glow.AnchorPoint        = Vector2.new(0.5,0.5)
+glow.Position           = UDim2.fromScale(0.5,0.5)
+glow.BackgroundTransparency = 1
+glow.Image              = "rbxassetid://5028857084"
+glow.ImageColor3        = Color3.fromRGB(255,38,38)
+glow.ImageTransparency  = 0.4
+glow.ZIndex             = 29
+glow.Parent             = island
+
+lbl(island, {Text="H", Size=28, Font=Enum.Font.GothamBlack,
+    Color=Color3.fromRGB(255,38,38), Align=Enum.TextXAlignment.Center, Z=31})
+
+local ring = Instance.new("UIStroke")
+ring.Color       = Color3.fromRGB(255,38,38)
+ring.Thickness   = 2.5
+ring.Transparency = 0.3
+ring.Parent      = island
 
 task.spawn(function()
-    while true do
-        for i = 1, 4 do
-            subtitleLabel.Text = "Script Loading Please Wait for a While" .. string.rep(".", i)
-            task.wait(0.5)
-        end
+    while island.Parent do
+        TweenService:Create(ring, TweenInfo.new(0.6,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut),{Transparency=0.8}):Play()
+        task.wait(0.6)
+        TweenService:Create(ring, TweenInfo.new(0.6,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut),{Transparency=0.1}):Play()
+        task.wait(0.6)
     end
 end)
 
-local function glitchEffect()
-    glitchOverlay.BackgroundTransparency = 0.85
-    TweenService:Create(glitchOverlay, TweenInfo.new(0.08), {BackgroundTransparency = 1}):Play()
+-- Panel
+local panel = Instance.new("Frame")
+panel.Size             = UDim2.fromOffset(PANEL_W, PANEL_H)
+panel.BackgroundColor3 = Config.BgMid
+panel.BorderSizePixel  = 0
+panel.Visible          = false
+panel.ZIndex           = 20
+panel.Parent           = settingsGui
+corner(panel, 12)
+stroke(panel, Color3.fromRGB(255,38,38), 1.5, 0.6)
+
+local function updatePanelPos()
+    local ix = island.Position.X.Offset
+    local iy = island.Position.Y.Offset
+    panel.Position = UDim2.new(0, ix + 64, 0.5, iy - PANEL_H/2 + 28)
+end
+updatePanelPos()
+
+-- Panel header
+local ph = Instance.new("Frame")
+ph.Size             = UDim2.new(1,0,0,40)
+ph.BackgroundColor3 = Config.PanelRedDark
+ph.BorderSizePixel  = 0
+ph.ZIndex           = 21
+ph.Parent           = panel
+corner(ph, 12)
+local phFix = Instance.new("Frame")
+phFix.Size             = UDim2.new(1,0,0.5,0)
+phFix.Position         = UDim2.new(0,0,0.5,0)
+phFix.BackgroundColor3 = Config.PanelRedDark
+phFix.BorderSizePixel  = 0
+phFix.ZIndex           = 21
+phFix.Parent           = ph
+
+lbl(ph, {Text="HazeHub  •  Blox Fruits", Size=13, Font=Enum.Font.GothamBlack,
+    Color=Color3.fromRGB(255,38,38), Pos=UDim2.fromOffset(12,0), Z=22})
+
+local panelClose = Instance.new("TextButton")
+panelClose.Size               = UDim2.fromOffset(36,20)
+panelClose.Position           = UDim2.new(1,-40,0.5,0)
+panelClose.AnchorPoint        = Vector2.new(0,0.5)
+panelClose.BackgroundTransparency = 1
+panelClose.Text               = "close"
+panelClose.Font               = Enum.Font.Gotham
+panelClose.TextSize           = 11
+panelClose.TextColor3         = Config.TextSub
+panelClose.ZIndex             = 22
+panelClose.Parent             = ph
+
+-- Balance label + box
+lbl(panel, {Text="R$  FAKE BALANCE", Size=10, Color=Config.TextSub,
+    Pos=UDim2.fromOffset(16,50), FS=UDim2.new(1,-32,0,14), Z=22})
+
+local balBox = Instance.new("TextBox")
+balBox.Size               = UDim2.new(1,-32,0,32)
+balBox.Position           = UDim2.fromOffset(16,66)
+balBox.BackgroundColor3   = Config.BgDark
+balBox.BorderSizePixel    = 0
+balBox.Text               = tostring(Config.FakeBalance)
+balBox.PlaceholderText    = "e.g. 5000000"
+balBox.Font               = Enum.Font.GothamMedium
+balBox.TextSize           = 13
+balBox.TextColor3         = Config.TextMain
+balBox.PlaceholderColor3  = Config.TextSub
+balBox.ClearTextOnFocus   = false
+balBox.ZIndex             = 22
+balBox.Parent             = panel
+corner(balBox, 6)
+stroke(balBox, Color3.fromRGB(255,38,38), 1, 0.65)
+
+-- Apply button
+local applyBtn = Instance.new("TextButton")
+applyBtn.Size             = UDim2.new(1,-32,0,32)
+applyBtn.Position         = UDim2.fromOffset(16,108)
+applyBtn.BackgroundColor3 = Config.PanelRed
+applyBtn.Text             = "✔  Apply"
+applyBtn.Font             = Enum.Font.GothamBlack
+applyBtn.TextSize         = 13
+applyBtn.TextColor3       = Color3.new(1,1,1)
+applyBtn.AutoButtonColor  = false
+applyBtn.ZIndex           = 22
+applyBtn.Parent           = panel
+corner(applyBtn, 8)
+
+local applyDebounce = false
+applyBtn.MouseButton1Click:Connect(function()
+    if applyDebounce then return end
+    applyDebounce = true
+    local raw = balBox.Text:gsub("[,%s]","")
+    local v = tonumber(raw)
+    if v and v > 0 then
+        Config.FakeBalance = v
+    end
+    applyBtn.Text             = "✔  Applied!"
+    applyBtn.BackgroundColor3 = Color3.fromRGB(20, 180, 80)
+    task.delay(1.5, function()
+        if not applyBtn or not applyBtn.Parent then return end
+        applyBtn.Text             = "✔  Apply"
+        applyBtn.BackgroundColor3 = Config.PanelRed
+        applyDebounce = false
+    end)
+end)
+
+-- Open/close
+local panelOpen = false
+
+island.MouseButton1Click:Connect(function()
+    if panelOpen then return end
+    panelOpen = true
+    updatePanelPos()
+    panel.Size    = UDim2.fromOffset(0, 0)
+    panel.Visible = true
+    TweenService:Create(panel, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+        {Size = UDim2.fromOffset(PANEL_W, PANEL_H)}):Play()
+end)
+
+panelClose.MouseButton1Click:Connect(function()
+    panelOpen = false
+    TweenService:Create(panel, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
+        {Size = UDim2.fromOffset(0, 0)}):Play()
+    task.delay(0.25, function() panel.Visible = false end)
+end)
+
+-- Draggable
+do
+    local dragging  = false
+    local dragStart = nil
+    local startPos  = nil
+    local dragMoved = false
+
+    island.InputBegan:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging  = true
+            dragMoved = false
+            dragStart = i.Position
+            startPos  = island.Position
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(i)
+        if not dragging then return end
+        if i.UserInputType == Enum.UserInputType.MouseMovement then
+            local d = i.Position - dragStart
+            if math.abs(d.X) > 6 or math.abs(d.Y) > 6 then
+                dragMoved = true
+                island.Position = UDim2.new(
+                    startPos.X.Scale, startPos.X.Offset + d.X,
+                    startPos.Y.Scale, startPos.Y.Offset + d.Y
+                )
+                updatePanelPos()
+            end
+        end
+    end)
+    UserInputService.InputEnded:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = false
+        end
+    end)
 end
 
+-- ============================================================
+--  HOOK
+-- ============================================================
+local hookedBtns    = {}
+local lastFruit     = nil
+local lastRecipient = ""
+
+local function scanGiftingLabel()
+    for _, desc in ipairs(playerGui:GetDescendants()) do
+        if (desc:IsA("TextLabel") or desc:IsA("TextButton")) then
+            local t = desc.Text or ""
+            if t:find("Gifting") and t:find("Permanent") then
+                local f = findFruitByName(t)
+                if f then lastFruit = f end
+                local u = t:match("%[(.-)%]")
+                if u and u ~= "" then lastRecipient = u end
+            end
+        end
+    end
+end
+
+-- Scan multiple times to make sure we catch the recipient
+local function scanUntilRecipient()
+    for i = 1, 8 do
+        scanGiftingLabel()
+        if lastRecipient ~= "" then return end
+        task.wait(0.05)
+    end
+end
+
+-- LAYER 1: hookmetamethod — block at engine level before anything fires
+pcall(function()
+    local old
+    old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
+        local method = getnamecallmethod()
+        if self == MarketplaceService and
+           (method == "PromptGamePassPurchase" or
+            method == "PromptProductPurchase"  or
+            method == "PromptPurchase") then
+            scanUntilRecipient()
+            local id    = tonumber(select(2, ...))
+            local fruit = (id and findFruitById(id)) or lastFruit
+            if fruit then
+                local r = lastRecipient ~= "" and lastRecipient or "Unknown"
+                task.defer(function() showBuyModal(fruitToProductInfo(fruit), r) end)
+                return  -- BLOCK — never reaches Roblox
+            end
+        end
+        return old(self, ...)
+    end))
+end)
+
+-- LAYER 2: watch for Roblox's own purchase prompt ScreenGui and nuke it
+local ROBLOX_PURCHASE_GUIS = {
+    ["RobloxPromptGui"] = true,
+    ["PurchasePrompt"]  = true,
+    ["RobuxPurchase"]   = true,
+}
 task.spawn(function()
     while true do
-        for _, child in pairs(patternFrame:GetChildren()) do
-            if child:IsA("Frame") then
-                child.Position = child.Position + UDim2.new(0.0005, 0, 0.0003, 0)
-                if child.Position.X.Offset > 2 then
-                    child.Position = UDim2.new(math.random()/1, 0, math.random()/1, 0)
+        task.wait(0.05)
+        for _, sg in ipairs(playerGui:GetChildren()) do
+            if sg:IsA("ScreenGui") and ROBLOX_PURCHASE_GUIS[sg.Name] then
+                scanUntilRecipient()
+                local fruit = lastFruit
+                local r     = lastRecipient ~= "" and lastRecipient or "Unknown"
+                sg:Destroy()
+                if fruit then
+                    task.defer(function() showBuyModal(fruitToProductInfo(fruit), r) end)
                 end
             end
         end
-        task.wait(0.05)
     end
 end)
 
--- **JUMPING LOADING (15-20s TOTAL)**
-local startTime = tick()
-local totalDuration = math.random(15, 20)  -- Random 15-20 seconds
+-- LAYER 3: overlay on every button inside BF's gift modal
+local function hookConfirmButton(btn)
+    if not (btn:IsA("TextButton") or btn:IsA("ImageButton")) then return end
+    if hookedBtns[btn] then return end
+    if btn:IsDescendantOf(settingsGui) then return end
+    local sg = btn:FindFirstAncestorWhichIsA("ScreenGui")
+    if sg and sg.Name:find("HazeHub") then return end
+    if btn:FindFirstChild("_HazeOverlay") then return end
 
-task.spawn(function()
-    local currentPercent = 0
-    
-    while currentPercent < 100 and tick() - startTime < totalDuration do
-        -- Jump logic: Fast jumps early, slow near end
-        local timeElapsed = tick() - startTime
-        local progress = math.min(timeElapsed / totalDuration, 0.95)  -- 95% smooth
-        
-        local targetPercent = math.floor(progress * 100)
-        
-        -- Add jumps every 2-3 seconds
-        if timeElapsed % math.random(2, 3) < 0.1 then
-            targetPercent = math.min(targetPercent + math.random(3, 8), 95)
-        end
-        
-        if targetPercent > currentPercent then
-            currentPercent = targetPercent
-            
-            -- Smooth bar animation
-            TweenService:Create(barFill, TweenInfo.new(0.6, Enum.EasingStyle.Quart), 
-                {Size = UDim2.new(currentPercent/100, 0, 1, 0)}):Play()
-            
-            percentLabel.Text = currentPercent .. "%"
-            
-            if currentPercent % 15 == 0 then
-                glitchEffect()
+    local text = (btn.Text or ""):lower()
+    local name = (btn.Name or ""):lower()
+
+    -- Target ANY button inside a frame that contains "Send a Gift" or "Gifting"
+    local isInsideGiftModal = false
+    local p = btn.Parent
+    for _ = 1, 8 do
+        if not p then break end
+        if p:IsA("TextLabel") or p:IsA("TextButton") then
+            local t = (p.Text or ""):lower()
+            if t:find("send a gift") or t:find("gifting") then
+                isInsideGiftModal = true
+                break
             end
         end
-        
-        task.wait(0.2)
+        for _, c in ipairs(p:GetChildren()) do
+            if (c:IsA("TextLabel") or c:IsA("TextButton")) then
+                local t = (c.Text or ""):lower()
+                if t:find("send a gift") or t:find("gifting") then
+                    isInsideGiftModal = true
+                    break
+                end
+            end
+        end
+        if isInsideGiftModal then break end
+        p = p.Parent
     end
-    
-    -- FINAL RUSH TO 100%
-    for i = math.floor(currentPercent), 100 do
-        currentPercent = i
-        TweenService:Create(barFill, TweenInfo.new(0.3), 
-            {Size = UDim2.new(1, 0, 1, 0)}):Play()
-        percentLabel.Text = "100%"
-        glitchEffect()
-        task.wait(0.4)
+
+    -- Also match by button characteristics: gift emoji + number = confirm button
+    local isConfirm = text:find("🎁") and text:match("%d%d%d+")
+    local isNamedConfirm = name:find("buy") or name:find("confirm") or name:find("purchase") or name:find("gift")
+
+    if not (isInsideGiftModal or isConfirm or isNamedConfirm) then return end
+
+    hookedBtns[btn] = true
+    btn.MouseEnter:Connect(function() scanGiftingLabel() end)
+
+    local overlay = Instance.new("TextButton")
+    overlay.Name = "_HazeOverlay"
+    overlay.Size = UDim2.fromScale(1,1)
+    overlay.BackgroundTransparency = 1
+    overlay.Text = ""
+    overlay.ZIndex = (btn.ZIndex or 1) + 50
+    overlay.Parent = btn
+
+    pcall(function()
+        if getconnections then
+            for _,c in ipairs(getconnections(btn.MouseButton1Click)) do pcall(function() c:Disable() end) end
+            for _,c in ipairs(getconnections(btn.Activated))         do pcall(function() c:Disable() end) end
+        end
+    end)
+
+    overlay.MouseButton1Click:Connect(function()
+        scanUntilRecipient()
+        local fruit = lastFruit
+        local r     = lastRecipient ~= "" and lastRecipient or "Unknown"
+        if fruit then showBuyModal(fruitToProductInfo(fruit), r) end
+    end)
+end
+
+local function scanAll()
+    for _, v in ipairs(playerGui:GetDescendants()) do
+        task.defer(function() if v and v.Parent then hookConfirmButton(v) end end)
     end
-    
-    -- **EXECUTE SECOND SCRIPT**
-    task.wait(1)
-    loadstring(SECOND_SCRIPT)()
-    
-    -- Fade out loader
-    TweenService:Create(mainFrame, TweenInfo.new(2), {BackgroundTransparency = 1}):Play()
-    task.wait(2)
-    screenGui:Destroy()
+end
+
+scanAll()
+playerGui.DescendantAdded:Connect(function(d)
+    task.delay(0.05, function()
+        if d and d.Parent then hookConfirmButton(d) end
+        if (d:IsA("TextLabel") or d:IsA("TextButton")) then
+            local t = d.Text or ""
+            if t:find("Gifting") and t:find("Permanent") then scanGiftingLabel() end
+        end
+    end)
 end)
 
--- Title pulse (unchanged)
 task.spawn(function()
-    while titleLabel.Parent do
-        TweenService:Create(titleLabel, TweenInfo.new(2), {Size = UDim2.new(0.85, 0, 0, 90)}):Play()
-        task.wait(2)
-        TweenService:Create(titleLabel, TweenInfo.new(2), {Size = UDim2.new(0.85, 0, 0, 85)}):Play()
-        task.wait(1)
-    end
+    while true do task.wait(0.3) scanGiftingLabel() end
 end)
 
-print("🧠 BRAINROT LOADER - 15-20s + AUTO EXECUTE 🧠")
+print("[HazeHub] Loaded! Go to Permanent Fruit Shop → Gift → pick user → click price button.") 
